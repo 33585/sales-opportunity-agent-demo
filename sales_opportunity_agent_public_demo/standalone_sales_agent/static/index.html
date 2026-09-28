@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>商机中台 · 销售商机上报</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <section id="loginScreen" class="login-screen">
+      <div class="login-card">
+        <div class="brand-mark">商</div>
+        <div class="eyebrow">SALES OPPORTUNITY CENTER</div>
+        <h1>销售商机上报</h1>
+        <p class="login-subtitle">把每次客户沟通沉淀成可追踪、可推进的销售商机。</p>
+        <form id="loginForm">
+          <label for="loginUsername">账号</label>
+          <input id="loginUsername" autocomplete="username" placeholder="请输入账号" />
+          <label for="loginPassword">密码</label>
+          <input id="loginPassword" type="password" autocomplete="current-password" placeholder="请输入密码" />
+          <button class="primary-btn full-btn" type="submit">登录工作台</button>
+          <div id="loginError" class="form-error hidden"></div>
+        </form>
+        <div class="demo-login">
+          <strong>演示账号</strong>
+          <span>sales01 / Demo@123456</span>
+          <small>正式部署前请通过环境变量修改默认密码。</small>
+        </div>
+      </div>
+    </section>
+
+    <main id="appScreen" class="app-shell hidden">
+      <aside class="sidebar">
+        <div class="sidebar-brand">
+          <div class="brand-mark small">商</div>
+          <div>
+            <strong>商机中台</strong>
+            <span>Sales Workspace</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <button class="nav-item active" data-view="reportView"><span class="nav-icon">＋</span>上报商机</button>
+          <button class="nav-item" data-view="poolView"><span class="nav-icon">▦</span>商机池</button>
+        </nav>
+        <div class="sidebar-note">
+          <strong>上报标准</strong>
+          <span>客户、需求、场景和下一步是提交前的核心完整性检查项。</span>
+        </div>
+        <div class="sidebar-user">
+          <div class="avatar" id="userAvatar">销</div>
+          <div class="user-copy">
+            <strong id="userName">销售演示账号</strong>
+            <span id="userRole">销售顾问</span>
+          </div>
+          <button id="logoutBtn" class="icon-btn" title="退出登录">↪</button>
+        </div>
+      </aside>
+
+      <section class="main-content">
+        <header class="main-header">
+          <div>
+            <div class="breadcrumb">销售工作台 / <strong id="viewTitle">上报商机</strong></div>
+            <h1 id="pageTitle">今天的客户沟通，今天沉淀</h1>
+          </div>
+          <div class="header-actions">
+            <span class="secure-label">● 已安全连接</span>
+            <button id="newReportBtn" class="secondary-btn">新建上报</button>
+          </div>
+        </header>
+
+        <section class="metrics" id="metrics">
+          <article class="metric-card"><span>我的商机</span><strong id="metricTotal">0</strong><small>已提交到商机池</small></article>
+          <article class="metric-card"><span>近 7 天新增</span><strong id="metricWeek">0</strong><small>保持销售节奏</small></article>
+          <article class="metric-card warning"><span>高风险商机</span><strong id="metricRisk">0</strong><small>需要优先补齐信息</small></article>
+          <article class="metric-card"><span>当前阶段最多</span><strong id="metricStage">暂无</strong><small id="metricStageCount">还没有提交记录</small></article>
+        </section>
+
+        <section id="reportView" class="view">
+          <div class="section-heading">
+            <div><h2>上报一条新商机</h2><p>先写事实，再由 Agent 帮你整理；不确定的信息会被保留并标记。</p></div>
+            <span class="step-label">01 · 记录客户事实</span>
+          </div>
+          <div class="report-layout">
+            <article class="surface input-surface">
+              <div class="surface-heading">
+                <div><h3>客户沟通记录</h3><p>支持拜访纪要、电话记录、会议纪要和聊天摘要。</p></div>
+                <button id="sampleBtn" class="text-btn">填入样例</button>
+              </div>
+              <form id="analyzeForm">
+                <div class="field-grid">
+                  <div class="field"><label for="customerName">客户名称 <em>建议填写</em></label><input id="customerName" placeholder="例如：华东连锁便利店" /></div>
+                  <div class="field"><label for="leadSource">线索来源</label><select id="leadSource"><option>销售主动开发</option><option>市场活动</option><option>客户转介绍</option><option>官网/广告线索</option><option>存量客户增购</option></select></div>
+                  <div class="field"><label for="region">区域</label><input id="region" placeholder="例如：华东 / 上海" /></div>
+                  <div class="field"><label for="industry">客户行业</label><input id="industry" placeholder="例如：连锁零售" /></div>
+                  <div class="field"><label for="serviceLine">产品/业务线</label><input id="serviceLine" placeholder="例如：商家增长解决方案" /></div>
+                  <div class="field"><label for="customerLevel">客户级别</label><select id="customerLevel"><option>普通客户</option><option>重点客户</option><option>战略客户</option></select></div>
+                </div>
+                <div class="field">
+                  <label for="recordText">原始沟通记录 <span class="required">*</span></label>
+                  <textarea id="recordText" required placeholder="例如：今天拜访了客户……客户当前遇到……希望……最终由……决定……下一步……"></textarea>
+                  <div class="field-help"><span>尽量保留客户原话，Agent 会把判断依据留在证据字段中。</span><span id="charCount">0 / 50,000</span></div>
+                </div>
+                <details class="advanced-fields">
+                  <summary>补充已确认信息 <span>可选，手工填写会覆盖自动识别</span></summary>
+                  <div class="field-grid">
+                    <div class="field"><label for="contactName">主要联系人</label><input id="contactName" placeholder="姓名" /></div>
+                    <div class="field"><label for="contactRole">联系人职务</label><input id="contactRole" placeholder="例如：信息部负责人" /></div>
+                    <div class="field"><label for="decisionMaker">决策人</label><input id="decisionMaker" placeholder="姓名或称谓" /></div>
+                    <div class="field"><label for="decisionRole">决策人职务</label><input id="decisionRole" placeholder="例如：运营副总" /></div>
+                    <div class="field"><label for="scenario">核心场景</label><input id="scenario" placeholder="例如：门店库存盘点" /></div>
+                    <div class="field"><label for="budget">预算口径</label><input id="budget" placeholder="例如：30 万左右 / 未确认" /></div>
+                    <div class="field full-span"><label for="timeline">客户时间计划</label><input id="timeline" placeholder="例如：4 月前试点，3 月 22 日前发方案" /></div>
+                  </div>
+                </details>
+                <div class="form-actions"><button id="clearBtn" type="button" class="ghost-btn">清空</button><button id="analyzeBtn" type="submit" class="primary-btn">生成商机草稿 <span>→</span></button></div>
+              </form>
+            </article>
+
+            <article class="surface result-surface">
+              <div id="emptyState" class="result-empty"><div class="empty-icon">✦</div><h3>等待生成商机草稿</h3><p>完成左侧记录后，系统会生成结构化商机、风险和下一步行动。</p></div>
+              <section id="draftView" class="hidden">
+                <div class="surface-heading result-heading"><div><h3 id="opportunityTitle">商机草稿</h3><p id="draftMeta"></p></div><div id="submitBadge" class="status-badge">待校验</div></div>
+                <div class="quality-strip" id="qualityStrip"></div>
+                <div class="summary-grid">
+                  <div class="summary-item large"><span>客户需求</span><strong id="needText"></strong><small id="needEvidence"></small></div>
+                  <div class="summary-item large"><span>核心场景</span><strong id="scenarioText"></strong><small id="scenarioEvidence"></small></div>
+                  <div class="summary-item"><span>预算</span><strong id="budgetText"></strong></div>
+                  <div class="summary-item"><span>决策人</span><strong id="decisionText"></strong></div>
+                  <div class="summary-item"><span>商机阶段</span><strong id="stageText"></strong></div>
+                  <div class="summary-item"><span>时间计划</span><strong id="timelineText"></strong></div>
+                </div>
+                <div class="result-block"><div class="block-heading"><h4>影响人</h4><span>决策链</span></div><div id="influencerList" class="tag-list"></div></div>
+                <div class="result-columns">
+                  <div class="result-block"><div class="block-heading"><h4>风险提示</h4><span>优先补齐</span></div><div id="riskList" class="stack"></div></div>
+                  <div class="result-block"><div class="block-heading"><h4>下一步行动</h4><span>推进建议</span></div><div id="nextActionList" class="stack"></div></div>
+                </div>
+                <div class="result-block"><div class="block-heading"><h4>未确认信息</h4><span>提交前检查</span></div><div id="missingList" class="stack"></div></div>
+                <div class="confirm-panel"><div><strong>确认无误后提交商机池</strong><p>提交后会记录操作人和证据，避免重复上报。</p></div><div class="confirm-actions"><input id="confirmedBy" placeholder="确认人姓名" /><button id="submitBtn" class="primary-btn">确认提交</button></div></div>
+                <div id="submitResult" class="submit-result hidden"></div>
+              </section>
+            </article>
+          </div>
+        </section>
+
+        <section id="poolView" class="view hidden">
+          <div class="section-heading"><div><h2>商机池</h2><p>按阶段和关键词查看已确认提交的商机记录。</p></div><span class="step-label">02 · 跟进和复盘</span></div>
+          <article class="surface pool-surface">
+            <div class="pool-toolbar"><input id="poolSearch" placeholder="搜索客户、商机名称或沟通内容" /><select id="poolStage"><option value="">全部阶段</option><option value="S0">S0 线索待确认</option><option value="S1">S1 需求已识别</option><option value="S2">S2 需求评估/方案沟通</option><option value="S3">S3 报价/商务沟通</option><option value="S4">S4 决策/采购流程</option><option value="S5">S5 赢单</option><option value="S6">S6 输单/暂停</option></select><button id="refreshPoolBtn" class="secondary-btn">刷新</button></div>
+            <div class="table-wrap"><table><thead><tr><th>客户 / 商机</th><th>阶段</th><th>负责人</th><th>最近提交</th><th>编号</th></tr></thead><tbody id="poolBody"></tbody></table><div id="poolEmpty" class="table-empty hidden">暂无符合条件的商机</div></div>
+          </article>
+        </section>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
